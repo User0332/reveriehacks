@@ -30,7 +30,7 @@ Here is the navigation bar, where you can access your prrofile, a logout page, a
 
 ![Channels](readme-assets/viewchannels.png)
 
-Here you are presented with buttons for 5 subjects, and upon select Math, we can view the threads/questions asked in that channel.
+Here you are presented with buttons for 5 subjects, and upon selecting Math, we can view the threads/questions asked in that channel.
 
 ![Math Channel](readme-assets/viewchannel.png)
 
