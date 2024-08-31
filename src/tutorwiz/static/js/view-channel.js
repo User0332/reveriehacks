@@ -12,7 +12,7 @@ document.getElementById("new-thread").href = `/new-thread?channelID=${channelID}
 		const threadInfo = await getThreadInfo(threadID);
 		const authorInfo = await getUserInfo(threadInfo.author);
 
-		const threadSummaryDiv = document.createElement("div");
+		const threadSummaryDiv = document.createElement("a");
 		threadSummaryDiv.className = "thread-summary btn btn-success d-block text-center";
 
 		threadSummaryDiv.append(
@@ -20,7 +20,7 @@ document.getElementById("new-thread").href = `/new-thread?channelID=${channelID}
 			textElem("h6", `asked ${authorInfo.name}`)
 		);
 
-		threadSummaryDiv.onclick = () => location.href = `/view-thread?id=${threadID}`;
+		threadSummaryDiv.href = `/view-thread?id=${threadID}`;
 
 		threadsContainer.appendChild(threadSummaryDiv);
 	}

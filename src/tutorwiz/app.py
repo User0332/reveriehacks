@@ -320,7 +320,10 @@ def send_message():
 	db.session.add(message)
 	db.session.commit()
 
-	socketio.emit("new-message", content)
+	socketio.emit("new-message", {
+		"content": content,
+		"authorName": user.name
+	})
 
 	return jsonify({
 		"status": "success",

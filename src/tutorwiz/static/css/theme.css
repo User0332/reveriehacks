@@ -24,11 +24,23 @@
 	padding: 20px;
 }
 
-.light-green-scrollable-container {
-	background-color: #d4edda;
+.scrollable-container {
 	max-height: 400px;
+}
+
+.large-scrollable-container {
+	max-height: 600px;
 }
 
 .light-green {
 	background-color: #d4edda;
+}
+
+.message-content {
+	display: inline;
+	white-space: pre-wrap;
+}
+
+.author-name {
+	font-weight: bold;
 }

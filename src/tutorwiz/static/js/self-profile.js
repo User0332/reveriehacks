@@ -12,16 +12,16 @@ execWithUserData(async (userData) => {
 		const threadInfo = await getThreadInfo(threadID);
 		const channelName = (await getChannelInfo(threadInfo.channel)).name;
 
-		const threadDiv = document.createElement("div");
+		const threadDiv = document.createElement("a");
 
 		threadDiv.className = "thread-summary btn btn-success d-block text-center";
 
 		threadDiv.append(
-			textElem("h3", threadInfo.title),
-			textElem("h4", `in ${channelName}`)
+			textElem("h4", threadInfo.title),
+			textElem("h6", `in ${channelName}`)
 		);
 
-		threadDiv.onclick = () => location.href = `/view-thread?id=${threadID}`;
+		threadDiv.href = `/view-thread?id=${threadID}`;
 
 		myThreadsContainer.appendChild(threadDiv);
 	}

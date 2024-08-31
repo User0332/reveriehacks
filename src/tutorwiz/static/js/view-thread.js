@@ -1,6 +1,7 @@
 const threadID = new URLSearchParams(location.search).get("id");
 const messageInput = document.getElementById("message-input");
 const messageContainer = document.getElementById("message-container");
+const threadContentContainer = document.getElementById("thread-content-container");
 const socket = io();
 
 socket.on("new-message", renderLocalMessage);
@@ -24,19 +25,18 @@ async function renderDBMessage(messageInfo) {
 	);
 
 	messageContainer.appendChild(messageDiv);
+
+	threadContentContainer.scrollTop = threadContentContainer.scrollHeight;
 }
 
-async function renderLocalMessage(content) {
-	const authorName = authInfo.user.firstName;
-	const messageContent = content;
-
+async function renderLocalMessage(localMessageInfo) {
 	const messageDiv = document.createElement("div");
 	messageDiv.className = "message";
 
-	const authorElem = textElem("span", `${authorName}: `);
+	const authorElem = textElem("span", `${localMessageInfo.authorName}: `);
 	authorElem.className = "author-name";
 
-	const messageElem = textElem("span", messageContent);
+	const messageElem = textElem("span", localMessageInfo.content);
 	messageElem.className = "message-content";
 
 	messageDiv.append(
@@ -45,6 +45,8 @@ async function renderLocalMessage(content) {
 	);
 
 	messageContainer.appendChild(messageDiv);
+
+	threadContentContainer.scrollTop = threadContentContainer.scrollHeight;
 }
 
 async function renderAllDBMessages() {
@@ -63,6 +65,8 @@ function sendMessage() {
 	sendMessageToServer(threadID, messageContent).then((resp) => {
 		if (resp.status != "success") alert("You may not send messages in this thread!");
 	});
+
+	messageInput.value = "";
 }
 
 getThreadInfo(threadID).then(async (threadInfo) => {
@@ -79,3 +83,7 @@ getThreadInfo(threadID).then(async (threadInfo) => {
 })
 
 renderAllDBMessages();
+
+messageInput.addEventListener("keydown", (ev) => {
+	if ((ev.key == "Enter") && (ev.ctrlKey)) sendMessage();
+});
