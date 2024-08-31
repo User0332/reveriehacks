@@ -18,7 +18,7 @@ Sign up or Login into TutorWiz with Google
 
 You will begin, after logging in, at the profle page. There you will see your thread history, and qualifications.
 
-![Qualifications and Thread History](readme-assets/profil2.png)
+![Qualifications and Thread History](readme-assets/profile2.png)
 
 Your qualifications determine which channel you are qualifiied to reply in.
 
