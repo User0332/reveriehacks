@@ -1,10 +1,17 @@
+const userID = new URLSearchParams(location.search).get("id");
 const qualificationsContainer = document.getElementById("my-qualifications");
 const qualSelect = document.getElementById("select-qual");
 
-execWithUserData(async (userData) => {
+execWithUserData((selfInfo) => {
+	if (selfInfo.id == userID) location.href = "/self-profile";
+});
+
+(async () => {
+	const userData = await getUserInfo(userID);
+
 	const greeting = document.getElementById("greeting");
 
-	greeting.textContent = `Hello, ${userData.name}`;
+	greeting.textContent = `${userData.name}'s Profile`;
 
 	const myThreadsContainer = document.getElementById("my-threads-container");
 
@@ -33,9 +40,7 @@ execWithUserData(async (userData) => {
 
 		addQualificationManually(channelName, channelID);
 	}
-
-	reloadQualSelect(authorizedChannels);
-});
+})();
 
 function addQualificationManually(channelName, channelID) {
 	const qualDiv = document.createElement("div");
@@ -61,48 +66,4 @@ function addQualificationManually(channelName, channelID) {
 	);
 
 	qualificationsContainer.appendChild(qualDiv);
-}
-
-function addQualification() {
-	const channelName = qualSelect.options[qualSelect.selectedIndex].text;
-	const channelID = qualSelect.value;
-
-	addQualificationManually(channelName, channelID);
-
-	updateQualifications();
-}
-
-function updateQualifications() {
-	const quals = [];
-
-	for (const qualDiv of qualificationsContainer.children) {
-		const qualHeading = qualDiv.getElementsByTagName("h3")[0];
-	
-		quals.push(qualHeading.id)
-	}
-
-	updateUserInfo(quals).then(reloadQualSelect);
-}
-
-async function reloadQualSelect(currentQuals) {
-	qualSelect.innerHTML = "";
-	
-	const allChannels = await getChannels();
-
-	const notQualifiedIn = Object.keys(allChannels)
-		.filter(id => !currentQuals.includes(id))
-		.reduce((acc, id) => {
-			acc[id] = allChannels[id];
-			return acc;
-		}, {});
-
-	for (const [id, name] of Object.entries(notQualifiedIn)) {
-		const option = document.createElement("option");
-		option.className
-
-		option.value = id;
-		option.text = name;
-
-		qualSelect.appendChild(option);
-	}
 }

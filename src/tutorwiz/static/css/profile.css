@@ -1,3 +1,15 @@
 .qual-heading {
 	margin-right: 1.5rem;
 }
+
+#schedule-img {
+	height: 179px;
+	width: 312px;
+}
+
+#schedule-img-caption {
+	margin: 0.5rem;
+	color: white;
+	font-weight: bold;
+	font-size: larger;
+}

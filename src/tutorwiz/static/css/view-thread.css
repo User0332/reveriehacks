@@ -1,0 +1,12 @@
+.message-content {
+	white-space: pre-wrap;
+	margin-top: 0.5rem;
+}
+
+.author-name {
+	font-weight: bold;
+	cursor: pointer;
+	padding: 0.2rem;
+	background-color: #d4edda;
+	border-radius: 5px;
+}

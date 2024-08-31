@@ -35,12 +35,3 @@
 .light-green {
 	background-color: #d4edda;
 }
-
-.message-content {
-	display: inline;
-	white-space: pre-wrap;
-}
-
-.author-name {
-	font-weight: bold;
-}

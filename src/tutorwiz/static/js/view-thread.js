@@ -1,8 +1,14 @@
 const threadID = new URLSearchParams(location.search).get("id");
 const messageInput = document.getElementById("message-input");
+const messagePreview = document.getElementById("message-preview");
 const messageContainer = document.getElementById("message-container");
 const threadContentContainer = document.getElementById("thread-content-container");
 const socket = io();
+const md = window.markdownit();
+
+messageInput.addEventListener('input', () => {
+	messagePreview.innerHTML = md.render(messageInput.value);
+});
 
 socket.on("new-message", renderLocalMessage);
 
@@ -15,8 +21,10 @@ async function renderDBMessage(messageInfo) {
 
 	const authorElem = textElem("span", `${authorName}: `);
 	authorElem.className = "author-name";
+	authorElem.onclick = () => location.href = `/view-profile?id=${messageInfo.author}`;
 
-	const messageElem = textElem("span", messageContent);
+
+	const messageElem = elem("div", md.render(messageContent));
 	messageElem.className = "message-content";
 
 	messageDiv.append(
@@ -35,8 +43,9 @@ async function renderLocalMessage(localMessageInfo) {
 
 	const authorElem = textElem("span", `${localMessageInfo.authorName}: `);
 	authorElem.className = "author-name";
+	authorElem.onclick = () => location.href = `/view-profile?id=${localMessageInfo.authorID}`;
 
-	const messageElem = textElem("span", localMessageInfo.content);
+	const messageElem = elem("div", md.render(localMessageInfo.content));
 	messageElem.className = "message-content";
 
 	messageDiv.append(
@@ -67,11 +76,12 @@ function sendMessage() {
 	});
 
 	messageInput.value = "";
+	messagePreview.innerHTML = "";
 }
 
 getThreadInfo(threadID).then(async (threadInfo) => {
 	document.getElementById("thread-title").textContent = threadInfo.title;
-	document.getElementById("thread-description").textContent = threadInfo.description;
+	document.getElementById("thread-description").innerHTML = md.render(threadInfo.description);
 	
 	const channelName = (await getChannelInfo(threadInfo.channel)).name;
 

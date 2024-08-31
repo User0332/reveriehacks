@@ -322,7 +322,8 @@ def send_message():
 
 	socketio.emit("new-message", {
 		"content": content,
-		"authorName": user.name
+		"authorName": user.name,
+		"authorID": user.id
 	})
 
 	return jsonify({

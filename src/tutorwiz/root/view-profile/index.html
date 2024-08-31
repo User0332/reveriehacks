@@ -14,7 +14,7 @@
 		<script src="/static/js/userauth.js"></script>
 		<script src="/static/js/apihelpers.js"></script>
 		<script src="/static/js/element.js"></script>
-		<script src="/static/js/self-profile.js" defer></script>
+		<script src="/static/js/view-profile.js" defer></script>
 
 		<link rel="stylesheet" href="/static/css/theme.css">
 		<link rel="stylesheet" href="/static/css/profile.css">
@@ -30,22 +30,16 @@
 		<div class="content">
 			<div id="wrapper" class="container mt-5 p-4 bg-light text-success rounded border border-success">
 				<h1 id="greeting" class="text-center text-success"></h1>
-				<h2 class="text-center">Welcome to your profile!</h2>
+				<h2 class="text-center" id="heading"></h2>
 
-				<h2>My Threads</h2>
+				<h2 id="user-threads-heading">Threads</h2>
 				<div id="my-threads-container" class="mb-4 p-3 rounded overflow-auto light-green scrollable-container text-success">
 				</div>
 
-				<h2>My Qualifications</h2>
+				<h2 id="user-qualifications-heading">Qualifications</h2>
 				<div id="my-qualifications" class="mb-4 p-3 rounded overflow-auto light-green-scrollable-container text-success">
 				</div>
-
-				<div class="d-flex align-items-center mb-4">
-					<select id="select-qual" class="form-select me-2"></select>
-					<button onclick="addQualification()" class="btn btn-success">Add</button>
-				</div>
 			</div>
-		
 
 			<div class="container d-flex justify-content-center align-items-center mt-5">
 				<figure class="figure mt-3">

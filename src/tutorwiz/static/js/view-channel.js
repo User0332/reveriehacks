@@ -13,7 +13,7 @@ document.getElementById("new-thread").href = `/new-thread?channelID=${channelID}
 		const authorInfo = await getUserInfo(threadInfo.author);
 
 		const threadSummaryDiv = document.createElement("a");
-		threadSummaryDiv.className = "thread-summary btn btn-success d-block text-center";
+		threadSummaryDiv.className = "thread-summary btn btn-success d-block text-center my-1";
 
 		threadSummaryDiv.append(
 			textElem("h4", threadInfo.title),
