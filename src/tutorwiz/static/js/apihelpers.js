@@ -25,6 +25,9 @@ function getThreadInfo(threadID) {
 	return getJSONInfoFromAPICall(`/api/get-thread?id=${threadID}`);
 }
 
+function getChannels() {
+	return getJSONInfoFromAPICall(`/api/get-channels`);
+}
 
 function createThreadAPI(channel, title, description) {
 	return getJSONInfoFromAPICall(`/api/create-thread`, JSON.stringify({

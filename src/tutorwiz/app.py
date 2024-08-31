@@ -151,10 +151,24 @@ def create_thread():
 def get_channels():
 	ensure_user()
 	
-	return jsonify(
-		[channel.id for channel in query_all_of(Channel)]
-	)
+	return jsonify({
+		channel.id: channel.name
+		for channel in query_all_of(Channel)
+	})
 
+@app.route("/api/get-channel-info")
+@auth.require_user
+def get_channel_info():
+	ensure_user()
+
+	channel = query_by_id(Channel, request.args.get("id"))
+
+	if not channel: return Response(status=400)
+	
+	return jsonify({
+		"name": channel.name,
+		"threads": [thread.id for thread in channel.threads]
+	})
 
 @app.route("/get-threads")
 @auth.require_user
