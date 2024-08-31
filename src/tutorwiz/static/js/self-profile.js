@@ -14,12 +14,14 @@ execWithUserData(async (userData) => {
 
 		const threadDiv = document.createElement("div");
 
-		threadDiv.className = "thread-summary";
+		threadDiv.className = "thread-summary btn btn-success d-block text-center";
 
 		threadDiv.append(
 			textElem("h3", threadInfo.title),
 			textElem("h4", `in ${channelName}`)
 		);
+
+		threadDiv.onclick = () => location.href = `/view-thread?id=${threadID}`;
 
 		myThreadsContainer.appendChild(threadDiv);
 	}
@@ -29,42 +31,20 @@ execWithUserData(async (userData) => {
 	for (const channelID of authorizedChannels) {
 		const channelName = (await getChannelInfo(channelID)).name;
 
-		const qualDiv = document.createElement("div");
-
-		qualDiv.className = "channel-qualification";
-
-		const removeBtn = document.createElement("button");
-		removeBtn.textContent = '-';
-		
-		removeBtn.onclick = () => {
-			qualDiv.remove();
-			updateQualifications();
-		}
-	
-		const qualHeading = textElem("h3", channelName);
-		qualHeading.id = channelID;
-		
-		qualDiv.append(
-			qualHeading,
-			removeBtn
-		);
-
-		qualificationsContainer.appendChild(qualDiv);
+		addQualificationManually(channelName, channelID);
 	}
 
 	reloadQualSelect(authorizedChannels);
 });
 
-function addQualification() {
-	const channelName = qualSelect.options[qualSelect.selectedIndex].text;
-	const channelID = qualSelect.value;
-
+function addQualificationManually(channelName, channelID) {
 	const qualDiv = document.createElement("div");
-
-	qualDiv.className = "channel-qualification";
+	
+	qualDiv.className = "d-flex align-items-center";
 
 	const removeBtn = document.createElement("button");
-	removeBtn.textContent = '-';
+	removeBtn.className = "btn btn-success";
+	removeBtn.textContent = 'Remove';
 	
 	removeBtn.onclick = () => {
 		qualDiv.remove();
@@ -72,14 +52,22 @@ function addQualification() {
 	}
 
 	const qualHeading = textElem("h3", channelName);
+	qualHeading.className = "qual-heading"
 	qualHeading.id = channelID;
-
+	
 	qualDiv.append(
 		qualHeading,
 		removeBtn
 	);
-	
+
 	qualificationsContainer.appendChild(qualDiv);
+}
+
+function addQualification() {
+	const channelName = qualSelect.options[qualSelect.selectedIndex].text;
+	const channelID = qualSelect.value;
+
+	addQualificationManually(channelName, channelID);
 
 	updateQualifications();
 }

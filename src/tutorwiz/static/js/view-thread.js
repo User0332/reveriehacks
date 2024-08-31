@@ -65,9 +65,17 @@ function sendMessage() {
 	});
 }
 
-getThreadInfo(threadID).then((threadInfo) => {
+getThreadInfo(threadID).then(async (threadInfo) => {
 	document.getElementById("thread-title").textContent = threadInfo.title;
 	document.getElementById("thread-description").textContent = threadInfo.description;
+	
+	const channelName = (await getChannelInfo(threadInfo.channel)).name;
+
+	const backAnchor = document.getElementById("back-anchor");
+
+	backAnchor.href = `/view-channel?id=${threadInfo.channel}`;
+	backAnchor.textContent = `Go back to Channel '${channelName}'`;
+
 })
 
 renderAllDBMessages();

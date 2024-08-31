@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
@@ -16,15 +15,43 @@
 		<script src="/static/js/apihelpers.js"></script>
 		<script src="/static/js/element.js"></script>
 		<script src="/static/js/new-thread.js"></script>
+		<link rel="stylesheet" href="/static/css/theme.css">
 	</head>
-
-	<body>
-		<div id="wrapper">
-			<input type="text" id="thread-title" required/>
-			<textarea id="thread-description"></textarea>
-			<select id="channel-select"></select>
-			
-			<button onclick="createThread()">Create</button>
+	
+	<body class="bg-success text-white">
+		<div class="sidebar">
+			<a href=/view-channels>View Channels</a>
+			<a href=/self-profile>Profile</a>
+			<a href=/logout>Logout</a>
+		</div>
+		<div class="content">
+			<div class="container py-5">
+				<div class="row justify-content-center">
+					<div class="col-md-8">
+						<div class="card bg-light text-dark">
+							<div class="card-body">
+								<h1 id="heading" class="card-title text-center mb-4">Create a New Thread</h1>
+								
+								<form>
+									<div class="mb-3">
+										<label for="thread-title" class="form-label">Thread Title</label>
+										<input type="text" id="thread-title" class="form-control" required>
+									</div>
+									
+									<div class="mb-4">
+										<label for="thread-description" class="form-label">Description</label>
+										<textarea id="thread-description" class="form-control" rows="5"></textarea>
+									</div>
+									
+									<div class="d-grid">
+										<button type="button" onclick="createThread()" class="btn btn-success">Create</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
@@ -14,12 +13,28 @@
 			
 		<script src="/static/js/userauth.js"></script>
 		<script src="/static/js/apihelpers.js"></script>
+		<script src="/static/js/element.js"></script>
+		<script src="/static/js/view-channel.js" defer></script>
+		<link rel="stylesheet" href="/static/css/theme.css">
 	</head>
 
-	<body>
-		<div id="wrapper">
-			<div id="threads-container">
-				
+	<body class="bg-success text-light">
+		<div class="sidebar">
+			<a href=/view-channels>View Channels</a>
+			<a href=/self-profile>Profile</a>
+			<a href=/logout>Logout</a>
+		</div>
+		
+		<div class="content">
+			<div id="wrapper" class="container mt-5 p-4 bg-light text-success rounded border border-success">
+				<h1 id="header" class="text-center text-success">Dashboard</h1>
+
+				<a id="new-thread" href="#" class="btn btn-success mb-3 d-block text-center">New Thread</a>
+
+				<div id="threads-container" class="mb-4">
+				</div>
+			
+				<a id="back-anchor" href="/view-channels" class="text-success">Go back to All Channels</a>		
 			</div>
 		</div>
 	</body>

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
@@ -16,22 +15,36 @@
 		<script src="/static/js/apihelpers.js"></script>
 		<script src="/static/js/element.js"></script>
 		<script src="/static/js/self-profile.js" defer></script>
+
+		<link rel="stylesheet" href="/static/css/theme.css">
+		<link rel="stylesheet" href="/static/css/profile.css">
 	</head>
 
-	<body>
-		<div id="wrapper">
-			<h1 id="greeting"></h1>
-			<h2>Welcome to your profile!</h2>
+	<body class="bg-success text-light">
+		<div class="sidebar">
+			<a href="/view-channels">View Channels</a>
+			<a href="/self-profile">Profile</a>
+			<a href="/logout">Logout</a>
+		</div>
 
-			<div id="my-threads-container">
+		<div class="content">
+			<div id="wrapper" class="container mt-5 p-4 bg-light text-success rounded border border-success">
+				<h1 id="greeting" class="text-center text-success"></h1>
+				<h2 class="text-center">Welcome to your profile!</h2>
 
+				<h2>My Threads</h2>
+				<div id="my-threads-container" class="mb-4 p-3 rounded overflow-auto light-green-scrollable-container text-success">
+				</div>
+
+				<h2>My Qualifications</h2>
+				<div id="my-qualifications" class="mb-4 p-3 rounded overflow-auto light-green-scrollable-container text-success">
+				</div>
+
+				<div class="d-flex align-items-center mb-4">
+					<select id="select-qual" class="form-select me-2"></select>
+					<button onclick="addQualification()" class="btn btn-success">Add</button>
+				</div>
 			</div>
-
-			<div id="my-qualifications">
-
-			</div>
-			<select id="select-qual"></select>
-			<button onclick="addQualification()">Add</button>
 		</div>
 	</body>
 </html>

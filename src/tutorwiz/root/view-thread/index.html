@@ -17,19 +17,31 @@
 		<script src="/static/js/apihelpers.js"></script>
 		<script src="/static/js/element.js"></script>
 		<script src="/static/js/view-thread.js" defer></script>
+		<link rel="stylesheet" href="/static/css/theme.css">
 	</head>
 
-	<body>
-		<div id="wrapper">
-			<h1 id="thread-title"></h1>
-			<p id="thread-description"></p>
+	<body class="bg-success text-light">
+		<div class="sidebar">
+			<a href=/view-channels>View Channels</a>
+			<a href=/self-profile>Profile</a>
+			<a href=/logout>Logout</a>
+		</div>
 
-			<div id="message-container">
-				
+		<div class="content">
+			<div id="wrapper" class="container mt-5 p-4 bg-light text-success rounded border border-success">
+				<h1 id="thread-title" class="text-center text-success">Thread Title</h1>
+				<p id="thread-description" class="text-center text-success">Thread Description</p>
+
+				<div id="message-container" class="mb-4">
+				</div>
+
+				<div class="d-flex mb-4">
+					<input id="message-input" type="text" class="form-control me-2" placeholder="Type a message"/>
+					<button onclick="sendMessage()" class="btn btn-success">Send</button>
+				</div>
+
+				<a id="back-anchor" href="#" class="text-success">Back</a>
 			</div>
-
-			<input id="message-input" type="text"/>
-			<button onclick="sendMessage()">Send</button>
 		</div>
 	</body>
 </html>

@@ -1,8 +1,6 @@
 import webpy
 
 def handler(app: webpy.App, *args):
-	from flask import request
+	from flask import redirect
 	
-	document = webpy.documentify("index.html")
-
-	return document._stringify()
+	return redirect("/self-profile")
