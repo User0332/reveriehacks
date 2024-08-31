@@ -14,11 +14,24 @@
 			
 		<script src="/static/js/userauth.js"></script>
 		<script src="/static/js/apihelpers.js"></script>
+		<script src="/static/js/element.js"></script>
+		<script src="/static/js/self-profile.js" defer></script>
 	</head>
 
 	<body>
 		<div id="wrapper">
+			<h1 id="greeting"></h1>
+			<h2>Welcome to your profile!</h2>
 
+			<div id="my-threads-container">
+
+			</div>
+
+			<div id="my-qualifications">
+
+			</div>
+			<select id="select-qual"></select>
+			<button onclick="addQualification()">Add</button>
 		</div>
 	</body>
 </html>

@@ -25,8 +25,16 @@ function getThreadInfo(threadID) {
 	return getJSONInfoFromAPICall(`/api/get-thread?id=${threadID}`);
 }
 
+function getChannelInfo(channelID) {
+	return getJSONInfoFromAPICall(`/api/get-channel-info?id=${channelID}`);
+}
+
 function getMessageInfo(messageID) {
 	return getJSONInfoFromAPICall(`/api/get-message?id=${messageID}`);
+}
+
+function updateUserInfo(qualIDs) {
+	return getJSONInfoFromAPICall(`/api/update-user-roles?roles=${qualIDs.join(',')}`);
 }
 
 function getChannels() {

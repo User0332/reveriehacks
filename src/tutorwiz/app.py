@@ -43,8 +43,19 @@ def webpy_setup(app: App):
 		name: str = db.Column(db.String, unique=True, nullable=False)
 		threads = db.relationship("MessageThread", backref=db.backref("author"), lazy=True)
 		messages = db.relationship("Message", backref=db.backref("author"), lazy=True)
+		authorized_channels_comma_sep: str = db.Column(db.String, nullable=False)
 		
 		# schedule
+
+		@property
+		def authorized_channels(self) -> list[str]:
+			return list(
+				filter(None, self.authorized_channels_comma_sep.split(','))
+			)
+			
+		@authorized_channels.setter
+		def authorized_channels(self, value: list[str]):
+			self.authorized_channels_comma_sep = ','.join(value)
 
 	class Channel(db.Model):
 		__tablename__ = "channel"
@@ -101,7 +112,8 @@ def webpy_setup(app: App):
 		if user is None:
 			user = User(
 				id=current_user.user_id,
-				name=current_user.user.first_name
+				name=current_user.user.first_name,
+				authorized_channels_comma_sep=""
 			)
 
 			db.session.add(user)
@@ -114,7 +126,30 @@ def webpy_setup(app: App):
 	
 	def gen_id():
 		return secrets.token_urlsafe(10)+str(datetime.datetime.now().timestamp())
-	
+
+@app.route("/api/update-user-roles")
+@auth.require_user
+def update_roles():
+	user = ensure_user()
+
+	roles_str = request.args.get("roles")
+
+	if roles_str is None: return Response(status=400)
+
+	roles_list = list(filter(None, roles_str.split(',')))
+
+	authorized_channels: list[str] = []
+
+	for channel_id in roles_list:
+		if not query_by_id(Channel, channel_id): return Response(status=400)
+
+		authorized_channels.append(channel_id)
+
+	user.authorized_channels = authorized_channels
+
+	db.session.commit()
+
+	return jsonify(authorized_channels)
 
 @app.route("/api/create-thread" , methods=["POST"])
 @auth.require_user
@@ -230,7 +265,8 @@ def get_self():
 		"id": user.id, 
 		"name": user.name,
 		"threads": [thread.id for thread in user.threads], 
-		"messages": [message.id for message in user.messages]
+		"messages": [message.id for message in user.messages],
+		"authorizedChannels": user.authorized_channels
 	})
 
 
@@ -248,7 +284,8 @@ def get_user():
 		"id": user.id, 
 		"name": user.name,
 		"threads": [thread.id for thread in user.threads], 
-		"messages": [message.id for message in user.messages]
+		"messages": [message.id for message in user.messages],
+		"authorizedChannels": user.authorized_channels
 	})
 
 
@@ -262,7 +299,15 @@ def send_message():
 
 	if (not content) or (not thread_id): return Response(status=400)
 
-	if not query_by_id(MessageThread, thread_id): return Response(status=400)
+	thread = query_by_id(MessageThread, thread_id)
+
+	if not thread: return Response(status=400)
+
+	if (thread.author.id != user.id) and (thread.channel.id not in user.authorized_channels):
+		return jsonify({ # user is not allowed to send message
+			"status": "failure",
+			"reason": "forbidden",
+		})
 
 	message = Message(
 		id=gen_id(),
@@ -277,4 +322,7 @@ def send_message():
 
 	socketio.emit("new-message", content)
 
-	return jsonify(message.id)
+	return jsonify({
+		"status": "success",
+		"reason": message.id
+	})

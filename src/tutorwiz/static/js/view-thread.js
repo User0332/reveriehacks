@@ -60,7 +60,9 @@ async function renderAllDBMessages() {
 function sendMessage() {
 	const messageContent = messageInput.value;
 
-	sendMessageToServer(threadID, messageContent);
+	sendMessageToServer(threadID, messageContent).then((resp) => {
+		if (resp.status != "success") alert("You may not send messages in this thread!");
+	});
 }
 
 getThreadInfo(threadID).then((threadInfo) => {
