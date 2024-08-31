@@ -17,7 +17,7 @@ Start by going to "https://tutorwiz.onrender.com/"
     There you will see your thread history, and qualifications
     ![Qualifications and Thread History](readme-assets/image-2.png)
         Your qualifications determine which channel you are qualifiied to reply in.
-![alt text](image.png)
+![alt text](readme-assets/image-3.png)
     Here is the navig
     
 
