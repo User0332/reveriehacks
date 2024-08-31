@@ -47,22 +47,12 @@ function addQualificationManually(channelName, channelID) {
 	
 	qualDiv.className = "d-flex align-items-center";
 
-	const removeBtn = document.createElement("button");
-	removeBtn.className = "btn btn-success";
-	removeBtn.textContent = 'Remove';
-	
-	removeBtn.onclick = () => {
-		qualDiv.remove();
-		updateQualifications();
-	}
-
 	const qualHeading = textElem("h3", channelName);
 	qualHeading.className = "qual-heading"
 	qualHeading.id = channelID;
 	
 	qualDiv.append(
-		qualHeading,
-		removeBtn
+		qualHeading
 	);
 
 	qualificationsContainer.appendChild(qualDiv);
