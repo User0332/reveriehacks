@@ -29,7 +29,6 @@ def webpy_setup(app: App):
 	global gen_id
 
 	# Init application, auth, socketio & db
-	app.debug = True
 	app.secret_key = secret_keys.APP_SECRET_KEY
 	
 	db = app.sqlalchemy.init("sqlite:///database.db")
