@@ -8,9 +8,9 @@ Start by going to "https://tutorwiz.onrender.com/"
 
 ### Login
 
-![Login Page](readme-assets/login.png)
-
 Sign up or Login into TutorWiz with Google
+
+![Login Page](readme-assets/login.png)
 
 ### Profile Page
 
