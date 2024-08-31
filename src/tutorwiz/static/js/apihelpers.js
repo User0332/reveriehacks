@@ -1,9 +1,9 @@
 // authInfo should be defined prior to loading this library
 
-function makeAPICall(endpoint, body, method, extraHeaders) {
-	return fetch(endpoint, {
+async function makeAPICall(endpoint, body, method, extraHeaders) {
+	return await fetch(endpoint, {
 		headers: {
-			Authorization: `Bearer ${authInfo.accessToken}`,
+			Authorization: `Bearer ${(await getAuthInfo()).accessToken}`,
 			...extraHeaders
 		},
 		method,
@@ -23,6 +23,10 @@ function getUserInfo(userID) {
 
 function getThreadInfo(threadID) {
 	return getJSONInfoFromAPICall(`/api/get-thread?id=${threadID}`);
+}
+
+function getMessageInfo(messageID) {
+	return getJSONInfoFromAPICall(`/api/get-message?id=${messageID}`);
 }
 
 function getChannels() {

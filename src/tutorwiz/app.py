@@ -1,7 +1,5 @@
 import datetime
 import secrets
-
-from flask_socketio import emit
 import secret_keys
 from sockioevents import socketio
 from typing import TypeVar
@@ -101,12 +99,12 @@ def webpy_setup(app: App):
 		user = query_by_id(User, current_user.user_id)
 
 		if user is None:
-			db.session.add(
-				User(
-					id=current_user.user_id,
-					name=current_user.user.first_name
-				)
+			user = User(
+				id=current_user.user_id,
+				name=current_user.user.first_name
 			)
+
+			db.session.add(user)
 
 			db.session.commit()
 
@@ -216,7 +214,7 @@ def get_thread():
 
 	return jsonify({
 		"author": thread.author.id,
-		"channel": thread.channel,
+		"channel": thread.channel.id,
 		"description": thread.description,
 		"title": thread.title,
 		"messages": [message.id for message in thread.messages]
@@ -277,6 +275,6 @@ def send_message():
 	db.session.add(message)
 	db.session.commit()
 
-	emit("new-message", content)
+	socketio.emit("new-message", content)
 
 	return jsonify(message.id)

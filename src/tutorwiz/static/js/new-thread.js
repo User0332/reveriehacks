@@ -18,7 +18,8 @@ function createThread() {
 	const description = document.getElementById("thread-description").value;
 	const channel = document.getElementById("channel-select").value;
 
-	const threadID = createThreadAPI(channel, title, description);
+	createThreadAPI(channel, title, description).then((threadID) => {
+		location.href = `/view-thread?id=${threadID}`;
 
-	location.href = `/view-thread?id=${threadID}`;
+	});
 }

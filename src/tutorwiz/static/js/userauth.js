@@ -1,31 +1,30 @@
 const authUrl = "https://8930990.propelauthtest.com";
 const authClient = PropelAuth.createClient({ authUrl });
-const getUserInfoRoute = "/api/getuserinfo"
+const getUserInfoRoute = "/api/get-self"
 let authInfo;
 
 async function getAuthInfo() {
 	return await authClient.getAuthenticationInfoOrNull();
 }
 
-(async () => { // onload
-	authInfo = await getAuthInfo();
-	if (!authInfo) location.href = authUrl;
-})()
+getAuthInfo().then((recievedInfo) => {
+	authInfo = recievedInfo;
 
-function execWithUserData(func) {
-	while (!authInfo);
+	if (!recievedInfo) location.href = authUrl;
+});
 
-	fetch(
+async function execWithUserData(func) {
+	const authInfo = await getAuthInfo();
+
+	const res = await fetch(
 		getUserInfoRoute, {
 			"headers": {
 				Authorization: `Bearer ${authInfo.accessToken}`
 			}
 		}
-	).then(
-		res => res.json()
-	).then(
-		userData => {
-			func(userData)
-		}
-	)
+	);
+	
+	const userData = await res.json();
+
+	func(userData)
 }

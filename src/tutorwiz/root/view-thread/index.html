@@ -15,11 +15,19 @@
 
 		<script src="/static/js/userauth.js"></script>
 		<script src="/static/js/apihelpers.js"></script>
+		<script src="/static/js/element.js"></script>
 		<script src="/static/js/view-thread.js" defer></script>
 	</head>
 
 	<body>
 		<div id="wrapper">
+			<h1 id="thread-title"></h1>
+			<p id="thread-description"></p>
+
+			<div id="message-container">
+				
+			</div>
+
 			<input id="message-input" type="text"/>
 			<button onclick="sendMessage()">Send</button>
 		</div>
